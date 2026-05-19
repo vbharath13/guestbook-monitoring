@@ -15,38 +15,7 @@ Frontend and backend services expose Prometheus metrics through `redis-exporter`
 
 Prometheus automatically discovers and scrapes metrics using Kubernetes pod annotations.
 
----
 
-# Architecture
-
-┌─────────────────────────────────────────────────┐
-│                Kubernetes Cluster                │
-│                                                 │
-│  ┌──────────────┐     ┌───────────────────────┐ │
-│  │ Redis Leader │◄────│  Redis Follower x2    │ │
-│  │ + exporter   │     │  + exporter           │ │
-│  └──────┬───────┘     └───────────────────────┘ │
-│         │                                       │
-│  ┌──────▼──────────────────────────────────┐    │
-│  │           Frontend x3                   │    │
-│  │  ┌──────────────┐  ┌─────────────────┐  │    │
-│  │  │  php-redis   │  │  redis-exporter │  │    │
-│  │  │  (port 80)   │  │   (port 9121)   │  │    │
-│  │  └──────────────┘  └────────┬────────┘  │    │
-│  └─────────────────────────────┼───────────┘    │
-│                                │                │
-│  ┌─────────────────────────────▼─────────────┐  │
-│  │               Prometheus                  │  │
-│  │       Scrapes metrics from /metrics       │  │
-│  └─────────────────────────────┬─────────────┘  │
-│                                │                │
-│  ┌─────────────────────────────▼─────────────┐  │
-│  │                 Grafana                   │  │
-│  │          Visualizes all metrics           │  │
-│  └───────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────┘
-
----
 
 # Prerequisites
 
